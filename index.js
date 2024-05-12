@@ -7,16 +7,15 @@ const port = process.env.PORT || 5000;
 
 
 // middleware
-// app.use(cors(
-//     {
-//         origin: [
-//             "http://localhost:5173"
-//             "https://prakritik-shongi.web.app",
-//             "https://prakritik-shongi.firebaseapp.com",
-//         ],
-//     }
-// ));
-app.use(cors());
+app.use(cors(
+    {
+        origin: [
+            "http://localhost:5173"
+            // "https://prakritik-shongi.web.app",
+            // "https://prakritik-shongi.firebaseapp.com",
+        ],
+    }
+));
 app.use(express.json());
 
 
@@ -38,7 +37,7 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
-        const alljobscollection = client.db('JobDB').collection('jobs');
+        const alljobscollection = client.db('jobDB').collection('jobs');
 
         // Data create on job database
         app.post('/joblist', async (req, res) => {
@@ -53,7 +52,7 @@ async function run() {
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
-        await client.close();
+        // await client.close();
     }
 }
 run().catch(console.dir);
