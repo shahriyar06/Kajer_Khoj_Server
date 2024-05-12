@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion} = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config()
 const cors = require('cors');
 const app = express();
@@ -38,6 +38,13 @@ async function run() {
         await client.connect();
 
         const alljobscollection = client.db('jobDB').collection('jobs');
+
+        // Data collect form craft database
+        app.get('/joblist', async (req, res) => {
+            const cursor = alljobscollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
 
         // Data create on job database
         app.post('/joblist', async (req, res) => {
