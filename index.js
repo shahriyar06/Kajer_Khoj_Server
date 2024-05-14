@@ -78,27 +78,14 @@ async function run() {
                     salaryrange: updatedjob.salaryrange,
                     applicationdeadline: updatedjob.applicationdeadline,
                     experience: updatedjob.experience,
-                    address: updatedjob.address
-                }
-            }
-            const result = await alljobscollection.updateOne(filter, updated);
-            res.send(result);
-        })
-
-        // Data updated on job database
-        app.put('/joblist/:id', async (req, res) => {
-            const id = req.params.id;
-            const filter = { _id: new ObjectId(id) };
-            const options = { upsert: true };
-            const updatedjob = req.body;
-            const updated = {
-                $set: {
+                    address: updatedjob.address,
                     jobapplicants: updatedjob.jobapplicants
                 }
             }
             const result = await alljobscollection.updateOne(filter, updated);
             res.send(result);
         })
+
 
         // Data delete in jobs database by id
         app.delete('/joblist/:id', async (req, res) => {
