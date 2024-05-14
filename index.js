@@ -85,6 +85,21 @@ async function run() {
             res.send(result);
         })
 
+        // Data updated on job database
+        app.put('/joblist/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updatedjob = req.body;
+            const updated = {
+                $set: {
+                    jobapplicants: updatedjob.jobapplicants
+                }
+            }
+            const result = await alljobscollection.updateOne(filter, updated);
+            res.send(result);
+        })
+
         // Data delete in jobs database by id
         app.delete('/joblist/:id', async (req, res) => {
             const id = req.params.id;
@@ -93,6 +108,13 @@ async function run() {
             res.send(result);
         })
 
+
+        // Data collect form Job database
+        app.get('/applylist', async (req, res) => {
+            const cursor = appliedjobscollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
 
         // Data create on appliedjob database
         app.post('/applylist', async (req, res) => {
